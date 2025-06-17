@@ -1,15 +1,24 @@
 from django.shortcuts import render
-from datetime import datetime  # Il faut importer datetime si tu veux l'utiliser
+from datetime import datetime
 
-# Create your views here.
 def index(request):
     context = {
         "messages": [
             {
-                "content": "text",
+                "content": "Hello world!",
                 "username": "CommentCoder",
                 "created_at": datetime.now()
-            }
+            },
+            {
+                "content": "Bienvenue sur le site.",
+                "username": "DevTunisien",
+                "created_at": datetime.now()
+            },
+            {
+                "content": "Ceci est un message de test.",
+                "username": "Admin",
+                "created_at": datetime.now()
+            },
         ]
     }
-    return render(request,"index.html", context)
+    return render(request, "index.html", context)
