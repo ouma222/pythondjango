@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <!-- Section Message -->
+    <div class="message_detail">
+        <div class="message_header">
+            <div class="message_username">
+                {{ message.user.username|default:"Anonyme" }}
+            </div>
+            <div class="message_created_at">
+                {{ message.created_at|date:"d/m/Y H:i" }}
+            </div>
+        </div>
+        <div class="message_content">{{ message.content }}</div>
+    </div>
+
+    <!-- Section Commentaires -->
+    <div class="comments_section">
+        <h3>Commentaires ({{ comments_count }})</h3>
+
+        {% for comment in comments %}
+        <div class="comment">
+            <div class="comment_header">
+                <span class="comment_username">
+                    {{ comment.user.username|default:"Anonyme" }}
+                </span>
+                <span class="comment_date">
+                    {{ comment.created_at|date:"d/m/Y H:i" }}
+                </span>
+            </div>
+            <div class="comment_content">{{ comment.text }}</div>
+        </div>
+        {% empty %}
+        <p class="no_comments">Aucun commentaire pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

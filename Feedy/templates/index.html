@@ -1,16 +1,34 @@
+{% extends "Feedy/base.html" %}
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+{% block content %}
+    <title>Feedy</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
-<div id="container">
-    {% for message in messages %}
-    <div class="message">
-        <div class="message_header">
-            <div class="message_username">{{ message.username }}</div>
-            <div class="message_created_at">{{ message.created_at|date:"d/m/Y H:i" }}</div>
-        </div>
-        <div class="message_content">{{ message.content }}</div>
+    <form action="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="content" required placeholder="Votre message...">
+        <input type="submit" value="Poster">
+    </form>
+
+    <div id="container">
+        {% for message in messages %}
+        <a href="/{{message.id}}/">
+            <div class="message">
+                <div class="message_header">
+                    <div class="message_username">
+                        {{ message.user.username|default:"Anonyme" }}
+                    </div>
+                    <div class="message_created_at">
+                        {{ message.created_at|date:"d/m/Y H:i" }}
+                    </div>
+                </div>
+                <div class="message_content">{{ message.content }}</div>
+            </div>
+        </a>
+        {% if not forloop.last %}<hr>{% endif %}
+        {% empty %}
+        <p class="no-messages">Aucun message à afficher.</p>
+        {% endfor %}
     </div>
-    <hr />
-    {% endfor %}
-</div>
+{% endblock %}

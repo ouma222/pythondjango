@@ -15,10 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from Feedy.views import index
+from django.urls import path, include
 
 urlpatterns = [
+    path('', include('Feedy.urls')),  # Espace après 'path' supprimé
     path('admin/', admin.site.urls),
-    path('', index),  # ← Cette ligne doit avoir une virgule et être à l'intérieur des crochets
 ]
